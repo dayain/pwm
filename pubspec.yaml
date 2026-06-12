@@ -1,0 +1,26 @@
+name: pwm
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.12.1
+
+dependencies:
+  crypto: ^3.0.7
+  encrypt: ^5.0.3
+  flutter:
+    sdk: flutter
+  flutter_secure_storage: ^10.3.1
+  path_provider: ^2.1.5
+  provider: ^6.1.5+1
+  rxdart: ^0.28.0
+  uuid: ^4.5.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
