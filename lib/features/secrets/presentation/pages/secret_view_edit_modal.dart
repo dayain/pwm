@@ -518,7 +518,7 @@ class SecretViewEditModal extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      CryptoUtil.decrypt(secret.password!),
+                      CryptoUtil.decrypt(secret.password),
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,

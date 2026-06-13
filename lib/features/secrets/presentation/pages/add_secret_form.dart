@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pwm/core/utils/crypt_util.dart';
+import 'package:pwm/core/utils/pwd_generator.dart';
 import 'package:pwm/features/secrets/domain/entities/banking_secret_entity.dart';
 import 'package:pwm/features/secrets/domain/entities/email_secret_entity.dart';
 import 'package:pwm/features/secrets/domain/entities/secret_entity.dart';
 import 'package:pwm/features/secrets/domain/entities/web_secret_entity.dart';
+import 'package:pwm/features/secrets/presentation/helpers/suggest_secret_dialog.dart';
 import 'package:pwm/features/secrets/presentation/managers/add_secret_vm.dart';
 import 'package:pwm/features/secrets/presentation/managers/secret_events.dart';
 import 'package:pwm/features/secrets/presentation/managers/secret_vm.dart';
@@ -137,16 +139,36 @@ class AddSecretForm extends StatelessWidget {
               },
             ),
             const SizedBox(height: 5),
-            TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: "Password",
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (v) => password = v,
-              validator: (v) => v!.isEmpty || v.length < 6
-                  ? "Required & minimum 6 chars"
-                  : null,
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (v) => password = v,
+                    validator: (v) => v!.isEmpty && v.length < 6
+                        ? "Required & minimum 6 chars"
+                        : null,
+                  ),
+                ),
+                SizedBox(width: 6),
+                ElevatedButton(
+                  onPressed: () {
+                    SuggestSecretDialog.showBottomSheet(
+                      context,
+                      SmartPasswordGenerator.generate(),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Icon(Icons.remove_from_queue_outlined, size: 36),
+                ),
+              ],
             ),
             const SizedBox(height: 24),
             ElevatedButton(
@@ -222,17 +244,48 @@ class AddSecretForm extends StatelessWidget {
                   : null,
             ),
             const SizedBox(height: 16),
-            TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: "Password",
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (v) => password = v,
-              validator: (v) => v!.isEmpty && v.length < 6
-                  ? "Required & minimum 6 chars"
-                  : null,
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (v) => password = v,
+                    validator: (v) => v!.isEmpty && v.length < 6
+                        ? "Required & minimum 6 chars"
+                        : null,
+                  ),
+                ),
+                SizedBox(width: 6),
+                ElevatedButton(
+                  onPressed: () {
+                    SuggestSecretDialog.showBottomSheet(
+                      context,
+                      SmartPasswordGenerator.generate(),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Icon(Icons.remove_from_queue_outlined, size: 36),
+                ),
+              ],
             ),
+            // TextFormField(
+            //   obscureText: true,
+            //   decoration: InputDecoration(
+            //     labelText: "Password",
+            //     border: OutlineInputBorder(),
+            //   ),
+            //   onChanged: (v) => password = v,
+            //   validator: (v) => v!.isEmpty && v.length < 6
+            //       ? "Required & minimum 6 chars"
+            //       : null,
+            // ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
@@ -307,29 +360,80 @@ class AddSecretForm extends StatelessWidget {
                   (v == null || v.trim().isEmpty) ? 'required' : null,
             ),
             const SizedBox(height: 16),
-            TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: "Password",
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (v) => password = v,
-              validator: (v) => v!.isEmpty && v.length < 6
-                  ? "Required & minimum 6 chars"
-                  : null,
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (v) => password = v,
+                    validator: (v) => v!.isEmpty && v.length < 6
+                        ? "Required & minimum 6 chars"
+                        : null,
+                  ),
+                ),
+                SizedBox(width: 6),
+                ElevatedButton(
+                  onPressed: () {
+                    SuggestSecretDialog.showBottomSheet(
+                      context,
+                      SmartPasswordGenerator.generate(),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Icon(Icons.remove_from_queue_outlined, size: 36),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
-            TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: "Profile Password",
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (v) => profilePassword = v,
-              validator: (v) => v!.isEmpty && v.length < 6
-                  ? "Required & minimum 6 chars"
-                  : null,
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: "Profile Password",
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (v) => profilePassword = v,
+                    validator: (v) => v!.isEmpty && v.length < 6
+                        ? "Required & minimum 6 chars"
+                        : null,
+                  ),
+                ),
+                SizedBox(width: 6),
+                ElevatedButton(
+                  onPressed: () {
+                    SuggestSecretDialog.showBottomSheet(
+                      context,
+                      SmartPasswordGenerator.generate(),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Icon(Icons.remove_from_queue_outlined, size: 36),
+                ),
+              ],
             ),
+            // TextFormField(
+            //   obscureText: true,
+            //   decoration: InputDecoration(
+            //     labelText: "Profile Password",
+            //     border: OutlineInputBorder(),
+            //   ),
+            //   onChanged: (v) => profilePassword = v,
+            //   validator: (v) => v!.isEmpty && v.length < 6
+            //       ? "Required & minimum 6 chars"
+            //       : null,
+            // ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {

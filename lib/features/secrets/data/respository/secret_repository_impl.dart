@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pwm/features/secrets/data/datasources/secret_local_datasource.dart';
 import 'package:pwm/features/secrets/data/models/banking_secret_model.dart';
 import 'package:pwm/features/secrets/data/models/email_secret_model.dart';
@@ -22,6 +26,7 @@ class SecretRepositoryImpl implements SecretRepository {
     final rawMapsList = _cachedSecrets
         .map((entity) => _mapEntityToModelJson(entity))
         .toList();
+    // printSecrets();
     await _localDataSource.saveSecrets(rawMapsList);
   }
 
@@ -101,5 +106,12 @@ class SecretRepositoryImpl implements SecretRepository {
       );
     }
     return _cachedSecrets;
+  }
+
+  void printSecrets() {
+    final jsonList = _cachedSecrets.map(_mapEntityToModelJson).toList();
+    if (kDebugMode) {
+      print(const JsonEncoder.withIndent('   ').convert(jsonList));
+    }
   }
 }
